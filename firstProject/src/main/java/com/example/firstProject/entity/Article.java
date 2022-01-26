@@ -1,6 +1,7 @@
 package com.example.firstProject.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor // constructor 롬복
 @NoArgsConstructor // 디폴트 constructor 롬북
 @ToString // toString 롬복
+@Getter // 게터 롬복
 public class Article {
 
     @Id // id 삽입!
@@ -23,6 +25,10 @@ public class Article {
     private String title;
     @Column
     private String content;
+
+//    public Long getId() {
+//        return id;
+//    }
 
 //    public Article() {
 //    }
