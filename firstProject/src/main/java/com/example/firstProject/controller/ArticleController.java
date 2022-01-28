@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +15,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
-@Slf4j // 로깅을 위한 어노테이션
+@Controller // 얘는 일반 controller, 뷰 템플릿을 반환함
+@Slf4j // 로깅을 위한 어노테이션 (log 찍을 수 있게)
 public class ArticleController {
 
     @Autowired // 이 어노테이션은 springboot 가 미리 생성해놓은 객체를 가져다가 자동 연결해줌
     private ArticleRepository articleReopsitory; // = newArticleRepo~~~를 안해도 됨. springboot 가 알아서해줌
-
 
     @GetMapping("/articles/new")
     public String newArticleForm() {
@@ -33,7 +31,6 @@ public class ArticleController {
     public String createArticle(ArticleForm form) { //  post 방식으로 던져지는 데이터(DTO)를 파라미터로 받음
 //        System.out.println(form.toString()); --> 로깅 기능으로 대체
         log.info(form.toString());
-
 
         // 이제 dto로 받아온 form 데이터를 db 로 잘 넣어줄거이다.
         // 1. form 데이터(DTO) 를 Entity 로 변환
@@ -97,6 +94,7 @@ public class ArticleController {
        return "articles/edit";
     }
 
+// PATCH
     @PostMapping("/articles/update")
     public String update(ArticleForm form){
         // 1. 찍어보기 (검증)
@@ -121,6 +119,7 @@ public class ArticleController {
         return "redirect:/articles/" + articleEntity.getId();
     }
 
+// DELETE
     @GetMapping("/articles/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes rttr){ // RedirectAttributes 는 메세지 찍어줌
         log.info("삭제요청이 들어왔습니다.");
